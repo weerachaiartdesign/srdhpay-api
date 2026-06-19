@@ -5,7 +5,7 @@
 
 name       = "srdhpay-api"
 main       = "worker.js"
-account_id = ""            # ← ใส่ Cloudflare Account ID ของคุณ
+account_id = "285edbcab35ec60f0ab9736be44dc6ff"            # ← ใส่ Cloudflare Account ID ของคุณ
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
@@ -13,7 +13,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding      = "DB"         # ชื่อที่ใช้ใน code : env.DB
 database_name = "srdhpay"   # ← ชื่อ D1 ใน Cloudflare Dashboard
-database_id  = ""           # ← ใส่ D1 Database ID ของคุณ
+database_id  = "26443676-5af5-4dfe-ad5a-f97ce7862fa4"           # ← ใส่ D1 Database ID ของคุณ
 
 # ── Environment Variables (non-secret) ──────────────────────
 [vars]
