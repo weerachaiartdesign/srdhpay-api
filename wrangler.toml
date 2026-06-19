@@ -1,0 +1,30 @@
+# ============================================================
+# wrangler.toml — SRDH PAY API Worker
+# repo : srdhpay-api
+# ============================================================
+
+name       = "srdhpay-api"
+main       = "worker.js"
+account_id = ""            # ← ใส่ Cloudflare Account ID ของคุณ
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# ── D1 Database Binding ─────────────────────────────────────
+[[d1_databases]]
+binding      = "DB"         # ชื่อที่ใช้ใน code : env.DB
+database_name = "srdhpay"   # ← ชื่อ D1 ใน Cloudflare Dashboard
+database_id  = ""           # ← ใส่ D1 Database ID ของคุณ
+
+# ── Environment Variables (non-secret) ──────────────────────
+[vars]
+ENVIRONMENT          = "production"
+FRONTEND_ORIGIN      = "https://srdhpay.weerachaiartdesign.workers.dev"
+APP_NAME             = "SRDH PAY"
+
+# ── Secret Variables (ตั้งผ่าน Cloudflare Dashboard) ────────
+# TELEGRAM_BOT_TOKEN   → wrangler secret put TELEGRAM_BOT_TOKEN
+# JWT_SECRET           → wrangler secret put JWT_SECRET
+
+# ── Routes ──────────────────────────────────────────────────
+[triggers]
+crons = []
