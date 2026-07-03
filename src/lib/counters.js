@@ -71,9 +71,14 @@ export function buildReceiveNo(fiscalYearFull, seq) {
 // REQUEST_NO : เก็บ 9 หลัก (FY2 + SEQ7) / แสดงผล "ลำดับ/FY2" เช่น 1/69 <-> 690000001
 // ------------------------------------------------------------
 export function parseRequestNoDisplay(display) {
-  const [seqPart, fyPart] = String(display).split('/');
-  const seq7 = String(parseInt(seqPart, 10)).padStart(7, '0');
-  return `${fyPart}${seq7}`;
+  const str = String(display || '').trim();
+  if (!str.includes('/')) throw new Error(`รูปแบบเลขที่ใบขอเบิกไม่ถูกต้อง: "${str}" (ต้องมี / เช่น 1/69)`);
+  const [seqPart, fyPart] = str.split('/');
+  const seq = parseInt(seqPart, 10);
+  const fy = (fyPart || '').trim();
+  if (isNaN(seq) || !fy) throw new Error(`รูปแบบเลขที่ใบขอเบิกไม่ถูกต้อง: "${str}"`);
+  const seq7 = String(seq).padStart(7, '0');
+  return `${fy}${seq7}`;
 }
 export function formatRequestNoDisplay(raw) {
   const fy = String(raw).slice(0, 2);
@@ -81,13 +86,15 @@ export function formatRequestNoDisplay(raw) {
   return `${seq}/${fy}`;
 }
 
-// ------------------------------------------------------------
-// DK_NO : เก็บ 9 หลัก (FY2 + SEQ7) / แสดงผล "ลำดับ/FY2" เช่น 1801/69 <-> 690001801
-// ------------------------------------------------------------
 export function parseDkNoDisplay(display) {
-  const [seqPart, fyPart] = String(display).split('/');
-  const seq7 = String(parseInt(seqPart, 10)).padStart(7, '0');
-  return `${fyPart}${seq7}`;
+  const str = String(display || '').trim();
+  if (!str.includes('/')) throw new Error(`รูปแบบเลขที่ฎีกาไม่ถูกต้อง: "${str}" (ต้องมี / เช่น 1801/69)`);
+  const [seqPart, fyPart] = str.split('/');
+  const seq = parseInt(seqPart, 10);
+  const fy = (fyPart || '').trim();
+  if (isNaN(seq) || !fy) throw new Error(`รูปแบบเลขที่ฎีกาไม่ถูกต้อง: "${str}"`);
+  const seq7 = String(seq).padStart(7, '0');
+  return `${fy}${seq7}`;
 }
 export function formatDkNoDisplay(raw) {
   const fy = String(raw).slice(0, 2);
