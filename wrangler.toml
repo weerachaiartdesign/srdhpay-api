@@ -6,5 +6,5 @@ compatibility_date = "2026-06-01"
 # database_id ด้านล่างต้องเป็น UUID ของฐานข้อมูลจริงที่ใช้งานอยู่
 [[d1_databases]]
 binding = "DB"
-database_name = "srdhpay-db"
+database_name = "srdhpay_db"
 database_id = "26443676-5af5-4dfe-ad5a-f97ce7862fa4"
