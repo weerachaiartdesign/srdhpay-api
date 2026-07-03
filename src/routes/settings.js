@@ -13,7 +13,7 @@ import { parseRequestNoDisplay, parseDkNoDisplay } from '../lib/counters.js';
 // ------------------------------------------------------------
 // 5.11.1 กำหนดปีงบประมาณ
 // ------------------------------------------------------------
-const FISCAL_KEYS = ['fiscal_year', 'fiscal_year_short', 'fiscal_start_date', 'fiscal_end_date', 'import_allow_start', 'import_allow_end'];
+const FISCAL_KEYS = ['fiscal_year', 'fiscal_year_short', 'fiscal_start_date', 'fiscal_end_date', 'import_allow_start', 'import_allow_end', 'import_limit_staff', 'import_limit_admin'];
 
 async function handleGetFiscalYear(env) {
   const placeholders = FISCAL_KEYS.map(() => '?').join(',');
