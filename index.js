@@ -8,7 +8,7 @@
 // ไม่เช่นนั้น env.DB จะเป็น undefined และทุก API จะ error
 // ============================================================
 
-import { corsPreflight, fail } from 'lib/response.js';
+import { corsPreflight, fail } from './lib/response.js';
 import { handleAuthRoutes } from './routes/auth.js';
 import { handleRegisterRoutes } from './routes/register.js';
 import { handleReceiveRoutes } from './routes/receive.js';
