@@ -72,6 +72,7 @@ const LOOKUP_TABLES = {
 async function handleLookupList(env, key, url) {
   const cfg = LOOKUP_TABLES[key];
   const search = url.searchParams.get('search') || '';
+  const all = url.searchParams.get('all') === '1'; // ถ้าส่ง ?all=1 ดึงทั้งหมด (ใช้ใน dropdown)
   const page = Math.max(1, parseInt(url.searchParams.get('page') || '1', 10));
   const pageSize = 50;
 
@@ -80,9 +81,17 @@ async function handleLookupList(env, key, url) {
   if (search) { where += ` AND name LIKE ?`; params.push(`%${search}%`); }
 
   const countRow = await env.DB.prepare(`SELECT COUNT(*) as total FROM ${cfg.table} WHERE ${where}`).bind(...params).first();
-  const rows = await env.DB.prepare(
-    `SELECT * FROM ${cfg.table} WHERE ${where} ORDER BY ${cfg.orderBy} LIMIT ? OFFSET ?`
-  ).bind(...params, pageSize, (page - 1) * pageSize).all();
+
+  let rows;
+  if (all) {
+    rows = await env.DB.prepare(
+      `SELECT * FROM ${cfg.table} WHERE ${where} ORDER BY ${cfg.orderBy}`
+    ).bind(...params).all();
+  } else {
+    rows = await env.DB.prepare(
+      `SELECT * FROM ${cfg.table} WHERE ${where} ORDER BY ${cfg.orderBy} LIMIT ? OFFSET ?`
+    ).bind(...params, pageSize, (page - 1) * pageSize).all();
+  }
 
   return ok({ data: rows.results, total: countRow?.total || 0, page, pageSize });
 }
