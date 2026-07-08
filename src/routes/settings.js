@@ -352,23 +352,21 @@ export async function handleSettingsRoutes(request, env, path) {
   const url = new URL(request.url);
 
   // ----- อ่านข้อมูล Lookup (ประเภทเงิน/เจ้าหนี้/หน่วยงาน) เปิดให้ทุก role ที่ login แล้ว -----
-  // เพราะใช้แสดง dropdown และสีป้ายกำกับในหลายหน้า (import, list, dashboard ฯลฯ)
-  // ส่วนการแก้ไข/เพิ่ม/ลบ (POST/PUT/DELETE) ยังคงจำกัดสิทธิ์ไว้ด้านล่าง
   const lookupReadMatch = path.match(/^\/api\/settings\/(money-types|vendors|depts)$/);
   if (lookupReadMatch && method === 'GET') {
     return handleLookupList(env, lookupReadMatch[1], url);
   }
 
+  // ----- fiscal-year GET และ editors GET เปิดให้ทุก role อ่านได้ (staff ต้องรู้ import date range) -----
+  if (path === '/api/settings/fiscal-year' && method === 'GET') return handleGetFiscalYear(env);
+  if (path === '/api/settings/editors' && method === 'GET') return handleEditorsList(request, env);
+
   const permError = await requirePermission(env, user, 'settings');
   if (permError) return permError;
-
-  if (path === '/api/settings/fiscal-year' && method === 'GET') return handleGetFiscalYear(env);
   if (path === '/api/settings/fiscal-year' && method === 'PUT') return handleUpdateFiscalYear(request, env, user);
 
   if (path === '/api/settings/display' && method === 'GET') return handleGetDisplay(env);
   if (path === '/api/settings/display' && method === 'PUT') return handleUpdateDisplay(request, env, user);
-
-  if (path === '/api/settings/editors' && method === 'GET') return handleEditorsList(request, env);
 
   if (path === '/api/settings/register-search' && method === 'GET') return handleRegisterSearch(request, env);
 
