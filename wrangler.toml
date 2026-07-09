@@ -1,5 +1,5 @@
 name = "srdhpay-api"
-main = "/index.js"
+main = "index.js"
 compatibility_date = "2026-07-09"
 
 # ตั้งค่า D1 Binding — ต้องระบุชื่อ binding เป็น "DB" ให้ตรงกับโค้ดทุกไฟล์ (env.DB)
